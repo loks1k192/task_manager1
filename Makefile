@@ -11,11 +11,14 @@ install: ## Установить зависимости
 run: ## Запустить приложение
 	uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 
-test: ## Запустить тесты
+test: ## Запустить тесты (локально: нужен PostgreSQL и .env с верным DATABASE_URL)
 	pytest -v
 
 test-cov: ## Запустить тесты с покрытием
 	pytest --cov=app --cov-report=term-missing --cov-report=html
+
+test-docker: ## Запустить тесты в контейнере API (БД db:5432, без настройки .env)
+	docker-compose exec api python -m pytest -v
 
 lint: ## Проверить код линтером
 	ruff check .
